@@ -11,7 +11,7 @@ const router = Router();
 
 router.route("/create").post(verifyJWT, CreateResturant);
 router.route("/getAll").post(verifyJWT, getAllRestaurant);
-router.route("/get-restaurent/:id").get(verifyJWT, getRestaurantById);
-router.route("/delete-restaurent/:id").delete(verifyJWT, deleteRestaurent);
+router.route("/get-restaurent/:restaurantId").get(verifyJWT, getRestaurantById);
+router.route("/delete-restaurent/:restaurantId").delete(verifyJWT, deleteRestaurent);
 
 export default router;

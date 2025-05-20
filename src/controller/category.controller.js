@@ -52,10 +52,16 @@ const getallCategory = asyncHandler(async (req, res) => {
 
 // Update Category
 const updateCategory = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { title, imageurl } = req.body;
-
   try {
+  const { id } = req.params;
+if (!id) {
+  throw new ApiError(404, "Please provide Category ID");
+}
+  const { title, imageurl } = req.body;
+ if (!title || !imageurl) {
+    throw new ApiError(400, "Please provide title and imageurl");
+  }
+ 
     const updatedCategory = await Category.findByIdAndUpdate(
       id,
       { title, imageurl },
@@ -64,7 +70,7 @@ const updateCategory = asyncHandler(async (req, res) => {
     if (!updatedCategory) {
       throw new ApiError(500, "No category found");
     }
-
+ 
     return res
       .status(200)
       .json(

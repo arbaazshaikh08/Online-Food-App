@@ -41,8 +41,9 @@ const CreateResturant = asyncHandler(async (req, res) => {
 
     return res
       .status(201)
-      .json(new ApiResponce(201, newRestaurant, "New Resturent Create Successfully"));
-      
+      .json(
+        new ApiResponce(201, newRestaurant, "New Resturent Create Successfully")
+      );
   } catch (error) {
     return res
       .status(error.statusCode || 500)
@@ -75,13 +76,13 @@ const getAllRestaurant = asyncHandler(async (req, res) => {
 
 // get  Restautent By id
 const getRestaurantById = asyncHandler(async (req, res) => {
-  const { restaurantid } = req.params.id;
+  const { restaurantId } = req.params;
 
   try {
-    if (!restaurantid) {
+    if (!restaurantId) {
       throw new ApiError(404, "Please provide Restaurent ID");
     }
-    const restaurant = await Restaurant.findById(restaurantid);
+    const restaurant = await Restaurant.findById(restaurantId);
 
     if (!restaurant) {
       throw new ApiError(404, "Restaurent Not Found");
@@ -99,12 +100,12 @@ const getRestaurantById = asyncHandler(async (req, res) => {
 
 //delete Resturent
 const deleteRestaurent = asyncHandler(async (req, res) => {
-  const restaurantid = req.params.id;
   try {
-    if (!restaurantid) {
+    const restaurantId = req.params;
+    if (!restaurantId) {
       throw new ApiError(404, "No Restaurent found or Provide ID");
     }
-    const restaurant = await Restaurant.findByIdAndDelete(restaurantid);
+    const restaurant = await Restaurant.findByIdAndDelete(restaurantId);
 
     return res
       .status(200)
